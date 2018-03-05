@@ -337,7 +337,7 @@ LOCAL_DX_FLAGS := --multi-dex
 LOCAL_JACK_FLAGS := --multi-dex native
 
 LOCAL_PROGUARD_ENABLED := disabled
-ifdef LOCAL_JACK_ENABLED
+
 # Proguard includes
 LOCAL_PROGUARD_FLAG_FILES := \
     java/com/android/dialer/common/proguard.flags \
@@ -348,10 +348,9 @@ LOCAL_PROGUARD_FLAG_FILES := \
 LOCAL_PROGUARD_ENABLED := custom
 
 LOCAL_PROGUARD_ENABLED += optimization
-else
 LOCAL_PROGUARD_ENABLED := disabled
 LOCAL_DX_FLAGS := --multi-dex
-endif
+
 
 # End Bug: 37077388
 
@@ -363,7 +362,7 @@ LOCAL_PRIVILEGED_MODULE := true
 LOCAL_USE_AAPT2 := true
 
 # b/37483961 - Jack Not Compiling Dagger Class Properly
-LOCAL_JACK_ENABLED := javac_frontend
+#LOCAL_JACK_ENABLED := javac_frontend
 
 include $(BUILD_PACKAGE)
 
