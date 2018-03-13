@@ -113,6 +113,7 @@ public class InCallPresenter implements CallList.Listener {
   private StatusBarNotifier mStatusBarNotifier;
   private ExternalCallNotifier mExternalCallNotifier;
   private ContactInfoCache mContactInfoCache;
+  private InCallVibrationHandler mInCallVibrationHandler;
   private Context mContext;
   private final OnCheckBlockedListener mOnCheckBlockedListener =
       new OnCheckBlockedListener() {
@@ -340,6 +341,9 @@ public class InCallPresenter implements CallList.Listener {
     mContext = context;
     BottomSheetHelper.getInstance().setUp(context);
     mContactInfoCache = contactInfoCache;
+
+    mInCallVibrationHandler = new InCallVibrationHandler(context);
+    addListener(mInCallVibrationHandler);
 
     mStatusBarNotifier = statusBarNotifier;
     mExternalCallNotifier = externalCallNotifier;
@@ -1520,6 +1524,11 @@ public class InCallPresenter implements CallList.Listener {
 
       InCallCsRedialHandler.getInstance().tearDown();
       BottomSheetHelper.getInstance().tearDown();
+
+      if (mInCallVibrationHandler != null) {
+        removeListener(mInCallVibrationHandler);
+      }
+      mInCallVibrationHandler = null;
 
       if (mCallList != null) {
         mCallList.removeListener(this);
